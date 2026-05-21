@@ -13,30 +13,40 @@ let queue = []
 const tiktokUsername = "ebetsha"
 
 /////////////////////////////////////////////////
-// CONNECT
+// TIKTOK CONNECT
 /////////////////////////////////////////////////
 
 const tiktokLive =
 new WebcastPushConnection(
-    tiktokUsername
+    tiktokUsername,
+    {
+        processInitialData: false,
+        enableExtendedGiftInfo: false,
+        enableWebsocketUpgrade: false
+    }
 )
 
 tiktokLive.connect()
-.then(() => {
+
+.then(state => {
 
     console.log(
         "CONNECTED TO TIKTOK LIVE"
     )
 
 })
+
 .catch(err => {
 
-    console.log(err)
+    console.log(
+        "TIKTOK ERROR:",
+        err
+    )
 
 })
 
 /////////////////////////////////////////////////
-// CHAT
+// CHAT EVENT
 /////////////////////////////////////////////////
 
 tiktokLive.on("chat", data => {
@@ -75,7 +85,7 @@ app.get("/queue",(req,res)=>{
 })
 
 /////////////////////////////////////////////////
-// SERVER
+// START SERVER
 /////////////////////////////////////////////////
 
 const PORT =
