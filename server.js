@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 })
 
 /////////////////////////////////////////////////
-// ADD USERNAME
+// USERNAME WEBHOOK
 /////////////////////////////////////////////////
 
 app.get("/username", (req, res) => {
@@ -28,7 +28,7 @@ app.get("/username", (req, res) => {
         req.query.username
 
     console.log(
-        "USERNAME:",
+        "NEW USER:",
         username
     )
 
@@ -38,11 +38,6 @@ app.get("/username", (req, res) => {
     ) {
 
         queue.push(username)
-
-        console.log(
-            "QUEUE:",
-            queue
-        )
     }
 
     res.send("ok")
@@ -50,15 +45,10 @@ app.get("/username", (req, res) => {
 })
 
 /////////////////////////////////////////////////
-// GET QUEUE
+// QUEUE
 /////////////////////////////////////////////////
 
 app.get("/queue", (req, res) => {
-
-    console.log(
-        "QUEUE SENT:",
-        queue
-    )
 
     res.json(queue)
 
@@ -67,7 +57,7 @@ app.get("/queue", (req, res) => {
 })
 
 /////////////////////////////////////////////////
-// START SERVER
+// SERVER
 /////////////////////////////////////////////////
 
 const PORT =
