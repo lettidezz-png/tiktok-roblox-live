@@ -1,5 +1,6 @@
 const express = require("express")
-const { WebcastPushConnection } = require("tiktok-live-connector")
+const { WebcastPushConnection } =
+require("tiktok-live-connector")
 
 const app = express()
 
@@ -9,10 +10,10 @@ let queue = []
 // TIKTOK USERNAME
 /////////////////////////////////////////////////
 
-const tiktokUsername = "ТВОЙ_НИК"
+const tiktokUsername = "ebetsha"
 
 /////////////////////////////////////////////////
-// CONNECT TO TIKTOK LIVE
+// CONNECT
 /////////////////////////////////////////////////
 
 const tiktokLive =
@@ -21,7 +22,6 @@ new WebcastPushConnection(
 )
 
 tiktokLive.connect()
-
 .then(() => {
 
     console.log(
@@ -29,18 +29,14 @@ tiktokLive.connect()
     )
 
 })
-
 .catch(err => {
 
-    console.log(
-        "FAILED:",
-        err
-    )
+    console.log(err)
 
 })
 
 /////////////////////////////////////////////////
-// CHAT EVENT
+// CHAT
 /////////////////////////////////////////////////
 
 tiktokLive.on("chat", data => {
@@ -51,6 +47,18 @@ tiktokLive.on("chat", data => {
     )
 
     queue.push(data.uniqueId)
+
+})
+
+/////////////////////////////////////////////////
+// ROOT
+/////////////////////////////////////////////////
+
+app.get("/",(req,res)=>{
+
+    res.send(
+        "SERVER WORKING"
+    )
 
 })
 
@@ -67,17 +75,7 @@ app.get("/queue",(req,res)=>{
 })
 
 /////////////////////////////////////////////////
-// ROOT
-/////////////////////////////////////////////////
-
-app.get("/",(req,res)=>{
-
-    res.send("SERVER WORKING")
-
-})
-
-/////////////////////////////////////////////////
-// START SERVER
+// SERVER
 /////////////////////////////////////////////////
 
 const PORT =
