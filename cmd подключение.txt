@@ -1,0 +1,7 @@
+cd Desktop\TikTokBridge
+Установи:
+npm init -y
+Потом:
+npm install express tiktok-live-connector
+ШАГ 6 — ЗАПУСТИ
+node server.js
