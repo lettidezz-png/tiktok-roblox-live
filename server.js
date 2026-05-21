@@ -1,75 +1,29 @@
 const express = require("express")
-const { WebcastPushConnection } =
-require("tiktok-live-connector")
 
 const app = express()
 
 let queue = []
 
 /////////////////////////////////////////////////
-// TIKTOK USERNAME
+// USERNAME WEBHOOK
 /////////////////////////////////////////////////
 
-const tiktokUsername = "ebetsha"
+app.get("/username",(req,res)=>{
 
-/////////////////////////////////////////////////
-// TIKTOK CONNECT
-/////////////////////////////////////////////////
+    const username =
+        req.query.username
 
-const tiktokLive =
-new WebcastPushConnection(
-    tiktokUsername,
-    {
-        processInitialData: false,
-        enableExtendedGiftInfo: false,
-        enableWebsocketUpgrade: false
+    if(username){
+
+        console.log(
+            "NEW USER:",
+            username
+        )
+
+        queue.push(username)
     }
-)
 
-tiktokLive.connect()
-
-.then(state => {
-
-    console.log(
-        "CONNECTED TO TIKTOK LIVE"
-    )
-
-})
-
-.catch(err => {
-
-    console.log(
-        "TIKTOK ERROR:",
-        err
-    )
-
-})
-
-/////////////////////////////////////////////////
-// CHAT EVENT
-/////////////////////////////////////////////////
-
-tiktokLive.on("chat", data => {
-
-    console.log(
-        "NEW USER:",
-        data.uniqueId
-    )
-
-    queue.push(data.uniqueId)
-
-})
-
-/////////////////////////////////////////////////
-// ROOT
-/////////////////////////////////////////////////
-
-app.get("/",(req,res)=>{
-
-    res.send(
-        "SERVER WORKING"
-    )
-
+    res.send("ok")
 })
 
 /////////////////////////////////////////////////
@@ -81,11 +35,21 @@ app.get("/queue",(req,res)=>{
     res.json(queue)
 
     queue = []
-
 })
 
 /////////////////////////////////////////////////
-// START SERVER
+// ROOT
+/////////////////////////////////////////////////
+
+app.get("/",(req,res)=>{
+
+    res.send(
+        "SERVER WORKING"
+    )
+})
+
+/////////////////////////////////////////////////
+// SERVER
 /////////////////////////////////////////////////
 
 const PORT =
@@ -96,5 +60,4 @@ app.listen(PORT,()=>{
     console.log(
         "SERVER STARTED"
     )
-
 })
